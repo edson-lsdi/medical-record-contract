@@ -11,12 +11,18 @@ import org.hyperledger.fabric.contract.annotation.Default;
 import org.hyperledger.fabric.contract.annotation.Info;
 import org.hyperledger.fabric.contract.annotation.License;
 import org.hyperledger.fabric.contract.annotation.Transaction;
+import org.hyperledger.fabric.shim.ChaincodeStub;
+import org.hyperledger.fabric.shim.ledger.KeyValue;
+import org.hyperledger.fabric.shim.ledger.QueryResultsIterator;
 
 import com.owlike.genson.Genson;
 
 import lsdi.hyperledger.medicalRecord.assets.EvolucaoAsset;
 import lsdi.hyperledger.medicalRecord.assets.MinistracaoMedicamentoAssset;
 import lsdi.hyperledger.medicalRecord.assets.PrescricaoAsset;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Contract(
         name = "medical_record",
@@ -72,31 +78,39 @@ public final class MedicalRecordContract implements ContractInterface {
         ctx.getStub().putStringState(ministracaoKey, genson.serialize(ministracao));
     }
 
-    /*@Transaction(intent = Transaction.TYPE.SUBMIT)
-    public List<AssetEvolucao> listaEvolucaoPaciente(Context ctx, String idPaciente) {
-        String query = String.format("{\"selector\":{\"idPaciente\":\"%s\"}}", idPaciente);
-        List<AssetEvolucao> evolucoes = new ArrayList<>();
-
+    @Transaction(intent = Transaction.TYPE.EVALUATE)
+    public String listaEvolucaoPaciente(Context ctx, String idPaciente) {
         ChaincodeStub stub = ctx.getStub();
-        stub.getQueryResult(query).forEachRemaining(keyValue -> {
-            AssetEvolucao evolucao = genson.deserialize(keyValue.getStringValue(), AssetEvolucao.class);
-            evolucoes.add(evolucao);
-        });
 
-        return evolucoes;
-    }*/
+        String queryString = String.format("{\"selector\":{\"idPaciente\":\"%s\"}}", idPaciente);
+        QueryResultsIterator<KeyValue> resultados = stub.getQueryResult(queryString);
 
-    /*@Transaction
-    public List<AssetMinistracaoMedicamento> listaMinistracaoMedicamentosPaciente(Context ctx, String idPaciente) {
-        String query = String.format("{\"selector\":{\"idPaciente\":\"%s\"}}", idPaciente);
-        List<AssetMinistracaoMedicamento> ministracoes = new ArrayList<>();
+        List<EvolucaoAsset> queryResults = new ArrayList<>();
+        Genson genson = new Genson();
 
+        for (KeyValue result : resultados) {
+            EvolucaoAsset evolucao = genson.deserialize(result.getStringValue(), EvolucaoAsset.class);
+             queryResults.add(evolucao);
+        }
+
+        return genson.serialize(queryResults);
+    }
+
+    @Transaction(intent = Transaction.TYPE.EVALUATE)
+    public String listaMinistracaoMedicamentosPaciente(Context ctx, String idPaciente) {
         ChaincodeStub stub = ctx.getStub();
-        stub.getQueryResult(query).forEachRemaining(keyValue -> {
-            AssetMinistracaoMedicamento ministracao = genson.deserialize(keyValue.getStringValue(), AssetMinistracaoMedicamento.class);
+
+        String queryString = String.format("{\"selector\":{\"idPaciente\":\"%s\"}}", idPaciente);
+        QueryResultsIterator<KeyValue> resultados = stub.getQueryResult(queryString);
+
+        List<MinistracaoMedicamentoAssset> ministracoes = new ArrayList<>();
+        Genson genson = new Genson();
+
+        for (KeyValue result : resultados) {
+            MinistracaoMedicamentoAssset ministracao = genson.deserialize(result.getStringValue(), MinistracaoMedicamentoAssset.class);
             ministracoes.add(ministracao);
-        });
+        }
 
-        return ministracoes;
-    }*/
+        return genson.serialize(ministracoes);
+    }
 }
