@@ -16,7 +16,7 @@ public final class EvolucaoAsset {
     @Property
     public String descricaoEvolucao;
     @Property
-    public Instant dataHoraEvolucao;
+    public String dataHoraEvolucao;
     /*@Property
     public String observacoes;
     @Property

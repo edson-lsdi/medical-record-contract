@@ -22,7 +22,7 @@ public final class PrescricaoAsset {
     @Property
     public String periodicidade;
     @Property
-    public Instant dataHoraPrescricao;
+    public String dataHoraPrescricao;
 /*    @Property
     public String viaAdministracao;
     @Property

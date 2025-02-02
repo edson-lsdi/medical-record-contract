@@ -22,7 +22,7 @@ public final class MinistracaoMedicamentoAssset {
     @Property
     public String unidadeDosagem;
     @Property
-    public Instant dataHoraMinistracao;
+    public String dataHoraMinistracao;
 /*    @Property
     public String reacaoAdversa;
     @Property
