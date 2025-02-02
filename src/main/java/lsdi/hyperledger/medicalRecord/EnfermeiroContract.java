@@ -19,16 +19,15 @@ import com.owlike.genson.Genson;
 
 import lsdi.hyperledger.medicalRecord.assets.EvolucaoAsset;
 import lsdi.hyperledger.medicalRecord.assets.MinistracaoMedicamentoAssset;
-import lsdi.hyperledger.medicalRecord.assets.PrescricaoAsset;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Contract(
-        name = "medical_record",
+        name = "enfermeiro",
         info = @Info(
-                title = "Medical Record",
-                description = "Controle de acesso em um prontuário médico",
+                title = "enfermeiro",
+                description = "Ações que um enfermeiro em um prontuário eletrônico",
                 version = "0.0.1-SNAPSHOT",
                 license = @License(
                         name = "Apache 2.0 License",
@@ -36,39 +35,13 @@ import java.util.List;
         ))
 
 @Default
-public final class MedicalRecordContract implements ContractInterface {
+public final class EnfermeiroContract implements ContractInterface {
 
     private final Genson genson = new Genson();
 
     private enum AssetTransferErrors {
         ASSET_NOT_FOUND,
         ASSET_ALREADY_EXISTS
-    }
-
-/*    public void addPaciente() {
-
-    }
-
-    public void addMedico() {
-
-    }
-
-    public void addEnfermeiro {
-
-    }*/
-  
-    @Transaction(intent = Transaction.TYPE.SUBMIT)
-    public void adicionaEvolucao(Context ctx, String evolucaoJSON) {
-        EvolucaoAsset evolucao = genson.deserialize(evolucaoJSON, EvolucaoAsset.class);
-        String evolucaoKey = "EVOLUCAO_" + evolucao.idEvolucao;
-        ctx.getStub().putStringState(evolucaoKey, genson.serialize(evolucao));
-    }
-
-    @Transaction(intent = Transaction.TYPE.SUBMIT)
-    public void adicionaPrescricao(Context ctx, String prescricaoJSON) {
-        PrescricaoAsset prescricao = genson.deserialize(prescricaoJSON, PrescricaoAsset.class);
-        String prescricaoKey = "PRESCRICAO_" + prescricao.idPrescricao;
-        ctx.getStub().putStringState(prescricaoKey, genson.serialize(prescricao));
     }
 
     @Transaction(intent = Transaction.TYPE.SUBMIT)
@@ -90,7 +63,7 @@ public final class MedicalRecordContract implements ContractInterface {
 
         for (KeyValue result : resultados) {
             EvolucaoAsset evolucao = genson.deserialize(result.getStringValue(), EvolucaoAsset.class);
-             queryResults.add(evolucao);
+            queryResults.add(evolucao);
         }
 
         return genson.serialize(queryResults);
