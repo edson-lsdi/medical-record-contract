@@ -6,7 +6,7 @@ import org.hyperledger.fabric.contract.annotation.DataType;
 import org.hyperledger.fabric.contract.annotation.Property;
 
 @DataType()
-public final class AssetEvolucao {
+public final class EvolucaoAsset {
     @Property
     public String idEvolucao;
     @Property

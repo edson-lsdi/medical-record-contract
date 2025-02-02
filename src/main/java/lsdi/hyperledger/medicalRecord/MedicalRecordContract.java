@@ -14,9 +14,9 @@ import org.hyperledger.fabric.contract.annotation.Transaction;
 
 import com.owlike.genson.Genson;
 
-import lsdi.hyperledger.medicalRecord.assets.AssetEvolucao;
-import lsdi.hyperledger.medicalRecord.assets.AssetMinistracaoMedicamento;
-import lsdi.hyperledger.medicalRecord.assets.AssetPrescricao;
+import lsdi.hyperledger.medicalRecord.assets.EvolucaoAsset;
+import lsdi.hyperledger.medicalRecord.assets.MinistracaoMedicamentoAssset;
+import lsdi.hyperledger.medicalRecord.assets.PrescricaoAsset;
 
 @Contract(
         name = "medical_record",
@@ -30,7 +30,7 @@ import lsdi.hyperledger.medicalRecord.assets.AssetPrescricao;
         ))
 
 @Default
-public final class MedicalRecord implements ContractInterface {
+public final class MedicalRecordContract implements ContractInterface {
 
     private final Genson genson = new Genson();
 
@@ -42,21 +42,21 @@ public final class MedicalRecord implements ContractInterface {
   
     @Transaction(intent = Transaction.TYPE.SUBMIT)
     public void adicionaEvolucao(Context ctx, String evolucaoJSON) {
-        AssetEvolucao evolucao = genson.deserialize(evolucaoJSON, AssetEvolucao.class);
+        EvolucaoAsset evolucao = genson.deserialize(evolucaoJSON, EvolucaoAsset.class);
         String evolucaoKey = "EVOLUCAO_" + evolucao.idEvolucao;
         ctx.getStub().putStringState(evolucaoKey, genson.serialize(evolucao));
     }
 
     @Transaction(intent = Transaction.TYPE.SUBMIT)
     public void adicionaPrescricao(Context ctx, String prescricaoJSON) {
-        AssetPrescricao prescricao = genson.deserialize(prescricaoJSON, AssetPrescricao.class);
+        PrescricaoAsset prescricao = genson.deserialize(prescricaoJSON, PrescricaoAsset.class);
         String prescricaoKey = "PRESCRICAO_" + prescricao.idPrescricao;
         ctx.getStub().putStringState(prescricaoKey, genson.serialize(prescricao));
     }
 
     @Transaction(intent = Transaction.TYPE.SUBMIT)
     public void ministraMedicamento(Context ctx, String ministracaoJSON) {
-        AssetMinistracaoMedicamento ministracao = genson.deserialize(ministracaoJSON, AssetMinistracaoMedicamento.class);
+        MinistracaoMedicamentoAssset ministracao = genson.deserialize(ministracaoJSON, MinistracaoMedicamentoAssset.class);
         String ministracaoKey = "MINISTRACAO_" + ministracao.idMinistracao;
         ctx.getStub().putStringState(ministracaoKey, genson.serialize(ministracao));
     }

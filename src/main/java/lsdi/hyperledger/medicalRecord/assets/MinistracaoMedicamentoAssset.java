@@ -6,13 +6,15 @@ import org.hyperledger.fabric.contract.annotation.DataType;
 import org.hyperledger.fabric.contract.annotation.Property;
 
 @DataType()
-public final class AssetPrescricao {
+public final class MinistracaoMedicamentoAssset {
+    @Property
+    public String idMinistracao;
     @Property
     public String idPrescricao;
     @Property
     public String idPaciente;
     @Property
-    public String idMedico;
+    public String idEnfermeiro;
     @Property
     public String idMedicamento;
     @Property
@@ -20,17 +22,13 @@ public final class AssetPrescricao {
     @Property
     public String unidadeDosagem;
     @Property
-    public String periodicidade;
+    public Instant dataHoraMinistracao;
     @Property
-    public Instant dataHoraPrescricao;
+    public String horarioAdministracao;
     @Property
-    public String nomeMedicamento;
+    public String reacaoAdversa;
     @Property
-    public String viaAdministracao;
+    public String observacoesEnfermeiro;
     @Property
-    public String duracaoTratamento;
-    @Property
-    public String observacoesPrescricao;
-    @Property
-    public String statusPrescricao;
+    public String confirmacaoPaciente;
 }
