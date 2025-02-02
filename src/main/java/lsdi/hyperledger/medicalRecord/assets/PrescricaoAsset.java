@@ -23,14 +23,12 @@ public final class PrescricaoAsset {
     public String periodicidade;
     @Property
     public Instant dataHoraPrescricao;
-    @Property
-    public String nomeMedicamento;
-    @Property
+/*    @Property
     public String viaAdministracao;
     @Property
     public String duracaoTratamento;
     @Property
     public String observacoesPrescricao;
     @Property
-    public String statusPrescricao;
+    public String statusPrescricao;*/
 }

@@ -39,6 +39,17 @@ public final class MedicalRecordContract implements ContractInterface {
         ASSET_ALREADY_EXISTS
     }
 
+/*    public void addPaciente() {
+
+    }
+
+    public void addMedico() {
+
+    }
+
+    public void addEnfermeiro {
+
+    }*/
   
     @Transaction(intent = Transaction.TYPE.SUBMIT)
     public void adicionaEvolucao(Context ctx, String evolucaoJSON) {

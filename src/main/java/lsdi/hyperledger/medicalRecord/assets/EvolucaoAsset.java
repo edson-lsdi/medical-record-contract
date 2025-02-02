@@ -17,12 +17,8 @@ public final class EvolucaoAsset {
     public String descricaoEvolucao;
     @Property
     public Instant dataHoraEvolucao;
-    @Property
-    public String nomePaciente;
-    @Property
-    public String especialidadeMedico;
-    @Property
+    /*@Property
     public String observacoes;
     @Property
-    public String status;
+    public String status;*/
 }
